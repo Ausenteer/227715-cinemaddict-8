@@ -1,4 +1,4 @@
-import {getRandomNumber} from './random-func';
+import {getRandomNumber} from './common';
 
 const nameFilters = [`Watchlist`, `History`, `Favorites`];
 

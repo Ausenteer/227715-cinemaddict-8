@@ -1,7 +1,7 @@
 import {
   getRandomNumber,
   getRandomElementInArray
-} from './random-func';
+} from './common';
 
 const DESCRIPTIONS = [
   `A family saga with a supernatural twist, set in a German town, where the disappearance of two young children exposes the relationships among four families.`,
@@ -55,7 +55,7 @@ const getRandomDuration = () => (
   `${getRandomNumber(0, 3)}h ${getRandomNumber(0, 59)}m`
 );
 
-const getRandomFilm = () => ({
+export const getRandomFilm = () => ({
   title: getRandomElementInArray(TITLES),
   poster: `../images/posters/${getRandomElementInArray(POSTERS)}.jpg`,
   rating: getRandomRating(),

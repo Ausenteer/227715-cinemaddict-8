@@ -1,10 +1,12 @@
 import {makeFilters} from './make-filters';
-import {makeFilms} from './make-films';
 
 import {getArrayFilters} from './filters-data';
 import {getArrayFilms} from './films-data';
 
-import {getRandomNumber} from './random-func';
+import {getRandomNumber} from './common';
+
+import Film from './classes/film';
+import Popup from './classes/popup'
 
 const FILM_COUNT_INITIAL = 8;
 const FILM_COUNT_RATED_COMMENTED = 2;
@@ -18,17 +20,43 @@ const filmCommentedSelector = document.querySelector(`.films-list--extra:nth-chi
 // добавить сгенерированные фильтры в .main-navigation
 mainNavigationSelector.insertAdjacentHTML(`beforeEnd`, makeFilters(getArrayFilters()));
 
-// добавить сгенерированные карточки фильмов в нужные селекторы
-filmsArraySelector.insertAdjacentHTML(`beforeEnd`, makeFilms(getArrayFilms(FILM_COUNT_INITIAL), true));
-filmRatedSelector.insertAdjacentHTML(`beforeEnd`, makeFilms(getArrayFilms(FILM_COUNT_RATED_COMMENTED), false));
-filmCommentedSelector.insertAdjacentHTML(`beforeEnd`, makeFilms(getArrayFilms(FILM_COUNT_RATED_COMMENTED), false));
-
 const filtersArraySelector = document.querySelectorAll(`.main-navigation__item:not(.main-navigation__item--additional)`);
+
+// функция для отрисовки фильмов и попапа спомощью классов
+const renderFilms = (selector, arr, isControl) => {
+  arr.forEach((el) => {
+    const film = new Film(el, isControl);
+    const popup = new Popup(el);
+    film.render(selector);
+
+    film.onPopup = () => {
+      popup.render();
+      document.body.appendChild(popup.element);
+    };
+
+    popup.onClose = () => {
+      document.body.removeChild(popup.element);
+      popup.unrender();
+    };
+  });
+};
 
 // обработчики по клику на название фильтра
 filtersArraySelector.forEach((element) => {
   element.addEventListener(`click`, () => {
+    const newArrFilms = getArrayFilms(getRandomNumber(1, FILM_COUNT_INITIAL), true);
     filmsArraySelector.innerHTML = ``;
-    filmsArraySelector.insertAdjacentHTML(`beforeEnd`, makeFilms(getArrayFilms(getRandomNumber(1, FILM_COUNT_INITIAL)), true));
+    renderFilms(filmsArraySelector, newArrFilms, true);
   });
 });
+
+// массивы из рандомных фильмов
+const arrFillms = getArrayFilms(FILM_COUNT_INITIAL, true);
+const arrFilmsRated = getArrayFilms(FILM_COUNT_RATED_COMMENTED, false);
+const arrFilmsCommented = getArrayFilms(FILM_COUNT_RATED_COMMENTED, false);
+
+// рендер фильмов
+renderFilms(filmsArraySelector, arrFillms, true);
+renderFilms(filmRatedSelector, arrFilmsRated, false);
+renderFilms(filmCommentedSelector, arrFilmsCommented, false);
+
