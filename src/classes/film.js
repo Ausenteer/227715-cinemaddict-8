@@ -1,14 +1,11 @@
 import {makeFilm} from '../make-films';
-import {createNewElement} from '../common';
+import {Component} from "./component";
 
-export default class Film {
+export default class Film extends Component {
   constructor(data, isControl) {
-    this._data = data;
-    this._element = null;
-    this._isControl = isControl;
-    this._onClick = this._onClick.bind(this);
+    super(data, isControl);
 
-    this._element = null;
+    this._onClick = this._onClick.bind(this);
   }
   get template() {
     return makeFilm(this._data, this._isControl);
@@ -21,14 +18,11 @@ export default class Film {
     return typeof this._onPopup === `function` && this._onPopup();
   }
 
-  render(selector) {
-    this._element = createNewElement(this.template);
-    selector.appendChild(this._element);
-
-    this.bind();
+  _bind() {
+    this._element.querySelector(`.film-card__comments`).addEventListener(`click`, this._onClick);
   }
 
-  bind() {
-    this._element.querySelector(`.film-card__comments`).addEventListener(`click`, this._onClick);
+  _unbind() {
+    this._element.querySelector(`.film-card__comments`).removeEventListener(`click`, this._onClick);
   }
 }

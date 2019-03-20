@@ -30,8 +30,7 @@ const renderFilms = (selector, arr, isControl) => {
     film.render(selector);
 
     film.onPopup = () => {
-      popup.render();
-      document.body.appendChild(popup.element);
+      popup.render(document.body);
     };
 
     popup.onClose = () => {
