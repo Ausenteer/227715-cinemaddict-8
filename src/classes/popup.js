@@ -1,17 +1,13 @@
 import {makePopup} from '../make-popup';
-import {createNewElement} from '../common';
+import {Component} from './component';
 
-export default class Popup {
+export default class Popup extends Component {
   constructor(data) {
-    this._data = data;
-    this._element = null;
+    super(data);
     this._onCloseClick = this._onCloseClick.bind(this);
   }
   get template() {
     return makePopup(this._data);
-  }
-  get element() {
-    return this._element;
   }
 
   set onClose(fn) {
@@ -22,22 +18,11 @@ export default class Popup {
     return typeof this._onClose === `function` && this._onClose();
   }
 
-  bind() {
+  _bind() {
     this._element.querySelector(`.film-details__close-btn`).addEventListener(`click`, this._onCloseClick);
   }
-  unbind() {
+  _unbind() {
     this._element.querySelector(`.film-details__close-btn`).removeEventListener(`click`, this._onCloseClick);
   }
 
-  render() {
-    this._element = createNewElement(this.template);
-    this.bind();
-
-    return this._element;
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
-  }
 }
