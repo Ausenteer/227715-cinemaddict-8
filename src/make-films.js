@@ -1,3 +1,12 @@
+import moment from 'moment';
+
+const countDuration = (duration) => (
+  [
+    Math.floor(duration / 60),
+    duration % 60
+  ]
+);
+
 const CONTROLS = [
   {
     name: `WL`,
@@ -23,38 +32,19 @@ const makeControls = () => (
   </form>`
 );
 
-export const makeFilms = (films, isControl) => (
-  films
-    .map((film) => (
-      `<article class="film-card ${isControl ? `` : `film-card--no-controls`}">
-        <h3 class="film-card__title">${film.title}</h3>
-        <p class="film-card__rating">${film.rating}</p>
-        <p class="film-card__info">
-          <span class="film-card__year">${film.year}</span>
-          <span class="film-card__duration">${film.duration}</span>
-          <span class="film-card__genre">${film.genre}</span>
-        </p>
-        <img src="${film.poster}" alt="" class="film-card__poster">
-        <p class="film-card__description">${film.description}</p>
-        <button class="film-card__comments">${film.commentsCount} comments</button>
-        ${isControl ? makeControls() : ``}
-      </article>`
-    ))
-    .join(``)
-);
-
-export const makeFilm = (film, isControl) => (
-  `<article class="film-card ${isControl ? `` : `film-card--no-controls`}">
+export const makeFilm = (film, isControl) => {
+  const [hour, min] = countDuration(film.duration);
+  return (`<article class="film-card ${isControl ? `` : `film-card--no-controls`}">
     <h3 class="film-card__title">${film.title}</h3>
     <p class="film-card__rating">${film.rating}</p>
     <p class="film-card__info">
-      <span class="film-card__year">${film.year}</span>
-      <span class="film-card__duration">${film.duration}</span>
+      <span class="film-card__year">${moment(film.year).format(`YYYY`)}</span>
+      <span class="film-card__duration">${hour}h ${min}m</span>
       <span class="film-card__genre">${film.genre}</span>
     </p>
     <img src="${film.poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${film.description}</p>
-    <button class="film-card__comments">${film.commentsCount} comments</button>
+    <button class="film-card__comments">${film.comments.length} comments</button>
     ${isControl ? makeControls() : ``}
-  </article>`
-);
+  </article>`);
+};
