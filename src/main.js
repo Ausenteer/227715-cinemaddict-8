@@ -6,9 +6,9 @@ import {getArrayFilms} from './films-data';
 import {getRandomNumber} from './common';
 
 import Film from './classes/film';
-import Popup from './classes/popup'
+import Popup from './classes/popup';
 
-const FILM_COUNT_INITIAL = 8;
+const FILM_COUNT_INITIAL = 4;
 const FILM_COUNT_RATED_COMMENTED = 2;
 
 // селекторы
@@ -22,7 +22,7 @@ mainNavigationSelector.insertAdjacentHTML(`beforeEnd`, makeFilters(getArrayFilte
 
 const filtersArraySelector = document.querySelectorAll(`.main-navigation__item:not(.main-navigation__item--additional)`);
 
-// функция для отрисовки фильмов и попапа спомощью классов
+// функция для отрисовки фильмов и попапа с помощью классов
 const renderFilms = (selector, arr, isControl) => {
   arr.forEach((el) => {
     const film = new Film(el, isControl);
@@ -32,8 +32,18 @@ const renderFilms = (selector, arr, isControl) => {
     film.onPopup = () => {
       popup.render(document.body);
     };
+    popup.onSubmit = (newObject) => {
+      selector.removeChild(film.element);
+      film.update(newObject);
+      film.render(selector);
+      document.body.removeChild(popup.element);
+      popup.unrender();
+    };
 
-    popup.onClose = () => {
+    popup.onClose = (newObject) => {
+      selector.removeChild(film.element);
+      film.update(newObject);
+      film.render(selector);
       document.body.removeChild(popup.element);
       popup.unrender();
     };

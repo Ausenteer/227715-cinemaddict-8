@@ -1,7 +1,10 @@
 import {
   getRandomNumber,
-  getRandomElementInArray
+  getRandomElementInArray,
+  getRandomElememtsInArray
 } from './common';
+
+import moment from 'moment';
 
 const DESCRIPTIONS = [
   `A family saga with a supernatural twist, set in a German town, where the disappearance of two young children exposes the relationships among four families.`,
@@ -41,8 +44,48 @@ const TITLES = [
   `Three friends`
 ];
 
-const YEAR_MIN = 1940;
-const YEAR_MAX = 2019;
+const DIRECTORS = [
+  `Christopher Nolan`,
+  `Wes Anderson`,
+  `Robert Zemeckis`,
+  `Tim Burton`,
+  `Steven Spielberg`,
+  `Ridley Scott`
+];
+
+const WRITERS = [
+  `Nora Ephron`,
+  `Aaron Sorkin`,
+  `Charlie Kaufman`,
+  `Francis Ford Coppola`,
+  `Baran bo Odar`,
+  `Amy Sherman-Palladino`
+];
+
+const ACTORS = [
+  `Leonardo DiCaprio`,
+  `Emilia Clarke`,
+  `Margot Robbie`,
+  `Viggo Mortensen`,
+  `Keanu Reeves`,
+  `Chloë Grace Moretz`
+];
+
+const COUNTRIES = [
+  `USA`,
+  `Russia`,
+  `Canada`,
+  `Germany`,
+  `Portugal`
+];
+
+const AGE_RATINGS = [
+  0,
+  6,
+  12,
+  16,
+  18
+];
 
 const COMMENTS_MIN = 0;
 const COMMENTS_MAX = 100;
@@ -51,9 +94,34 @@ const getRandomRating = () => (
   `${getRandomNumber(0, 9)}.${getRandomNumber(0, 9)}`
 );
 
-const getRandomDuration = () => (
-  `${getRandomNumber(0, 3)}h ${getRandomNumber(0, 59)}m`
-);
+const COMMENTS = [
+  {
+    author: `Elena Ilina`,
+    time: `20180618`,
+    comment: `WOW!`,
+    emoji: `😴`,
+  },
+  {
+    author: `Artem Alekhin`,
+    time: `20190518`,
+    comment: `Good!`,
+    emoji: `😀`,
+  },
+  {
+    author: `Anna Skopova`,
+    time: `20170511`,
+    comment: `So so`,
+    emoji: `😴`,
+  },
+  {
+    author: `Zhenya As`,
+    time: `20170812`,
+    comment: `Excellent`,
+    emoji: `😀`,
+  },
+];
+
+const getRandomReleaseDate = () => moment(Math.floor(Math.random() * new Date().getTime())).format(`DD MMMM YYYY`);
 
 export const getRandomFilm = () => ({
   title: getRandomElementInArray(TITLES),
@@ -61,9 +129,15 @@ export const getRandomFilm = () => ({
   rating: getRandomRating(),
   description: getRandomElementInArray(DESCRIPTIONS),
   genre: getRandomElementInArray(GENRES),
-  duration: getRandomDuration(),
-  year: getRandomNumber(YEAR_MIN, YEAR_MAX),
-  commentsCount: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX)
+  duration: getRandomNumber(10, 350),
+  year: getRandomReleaseDate(),
+  commentsCount: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
+  director: getRandomElementInArray(DIRECTORS),
+  ageRating: getRandomElementInArray(AGE_RATINGS),
+  actors: getRandomElememtsInArray(ACTORS, ACTORS.length).join(`, `),
+  writers: getRandomElememtsInArray(WRITERS, WRITERS.length).join(`, `),
+  countries: getRandomElementInArray(COUNTRIES),
+  comments: [getRandomElementInArray(COMMENTS)],
 });
 
 export const getArrayFilms = (count) => [...Array(count).keys()].map(getRandomFilm);
