@@ -45,6 +45,6 @@ export const makeFilm = (film, isControl) => {
     <img src="${film.poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${film.description}</p>
     <button class="film-card__comments">${film.comments.length} comments</button>
-    ${isControl ? makeControls() : ``}
-  </article>`);
+${isControl ? makeControls() : ``}
+</article>`);
 };
