@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 export default class Statistic extends Component {
   constructor(data) {
     super();
-    this._countWatched = data.filter((el) => el.isWatched == true);
+    this._countWatched = data.filter((el) => el.isWatched === true);
     this._commonDuration = this._countWatched.reduce((acc, film) => acc + film.duration, 0);
     const allGenres = this._countWatched.reduce((acc, film) => acc.concat(film.genre), []);
     const topGenre = allGenres.reduce((acc, item) => {
