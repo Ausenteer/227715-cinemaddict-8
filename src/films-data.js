@@ -138,9 +138,9 @@ export const getRandomFilm = (id) => ({
   writers: getRandomElememtsInArray(WRITERS, WRITERS.length).join(`, `),
   countries: getRandomElementInArray(COUNTRIES),
   comments: [getRandomElementInArray(COMMENTS)],
-  isWatched: getRandomNumber(0, 1),
-  isInWatchlist: getRandomNumber(0, 1),
-  isFavorite: getRandomNumber(0, 1),
+  isWatched: Math.random() >= 0.5,
+  isInWatchlist: Math.random() >= 0.5,
+  isFavorite: Math.random() >= 0.5,
   id
 });
 

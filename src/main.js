@@ -20,9 +20,9 @@ const filteredFilms = (films, nameFilter) => {
     case `All movies`:
       return films;
     case `Watchlist`:
-      return films.filter((el) => el.isInWatchlist == true);
+      return films.filter((el) => el.isInWatchlist === true);
     case `History`:
-      return films.filter((el) => el.isWatched == true);
+      return films.filter((el) => el.isWatched === true);
     default:
       return films;
   }
