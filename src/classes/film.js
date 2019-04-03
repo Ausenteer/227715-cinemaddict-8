@@ -12,6 +12,7 @@ export default class Film extends Component {
     this._onClick = this._onClick.bind(this);
     this._onAddToWatchListClick = this._onAddToWatchListClick.bind(this);
     this._onMarkAsWatchedClick = this._onMarkAsWatchedClick.bind(this);
+    this._onAddToFavoriteClick = this._onAddToFavoriteClick.bind(this);
 
     this._onPopup = null;
     this._onAddToWatchList = null;
@@ -47,12 +48,16 @@ export default class Film extends Component {
     event.preventDefault();
     return typeof this._onMarkAsWatched === `function` && this._onMarkAsWatched(this._data);
   }
+  _onAddToFavoriteClick(event) {
+    event.preventDefault();
+  }
 
   _bind() {
     this._element.querySelector(`.film-card__comments`).addEventListener(`click`, this._onClick);
     if (!this._element.classList.contains(`film-card--no-controls`)) {
       this._element.querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._onAddToWatchListClick);
       this._element.querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._onMarkAsWatchedClick);
+      this._element.querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, this._onAddToFavoriteClick);
     }
   }
 

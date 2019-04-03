@@ -28,7 +28,7 @@ const makeControls = () => (
     `<button class="film-card__controls-item button film-card__controls-item--${control.modificator}">
         ${control.name}
      </button>`
-  ))}
+  )).join(` `)}
   </form>`
 );
 

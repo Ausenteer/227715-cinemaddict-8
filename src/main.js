@@ -15,6 +15,17 @@ const filmsArraySelector = document.querySelector(`.films-list .films-list__cont
 const filmRatedSelector = document.querySelector(`.films-list--extra:nth-child(2) .films-list__container`);
 const filmCommentedSelector = document.querySelector(`.films-list--extra:nth-child(3) .films-list__container`);
 
+const updateFilms = (films, newFilm) => {
+  const index = films.findIndex((el) => el.id === newFilm.id);
+  films.splice(index, 1, newFilm);
+  return films;
+};
+
+// массивы из рандомных фильмов
+const arrFilms = getArrayFilms(FILM_COUNT_INITIAL);
+const arrFilmsRated = getArrayFilms(FILM_COUNT_RATED_COMMENTED);
+const arrFilmsCommented = getArrayFilms(FILM_COUNT_RATED_COMMENTED);
+
 const filteredFilms = (films, nameFilter) => {
   switch (nameFilter) {
     case `All movies`:
@@ -28,21 +39,10 @@ const filteredFilms = (films, nameFilter) => {
   }
 };
 
-const updateFilms = (films, newFilm) => {
-  const index = films.findIndex((el) => el.id === newFilm.id);
-  films.splice(index, 1, newFilm);
-  return films;
-};
-
-// массивы из рандомных фильмов
-const arrFillms = getArrayFilms(FILM_COUNT_INITIAL);
-const arrFilmsRated = getArrayFilms(FILM_COUNT_RATED_COMMENTED);
-const arrFilmsCommented = getArrayFilms(FILM_COUNT_RATED_COMMENTED);
-
 // функция для отрисовки фильмов и попапа с помощью классов
 const commonRender = () => {
   const renderFilms = (selector, arr, isControl) => {
-    const statistic = new Statistic(arrFillms);
+    const statistic = new Statistic(arr);
     statistic._bind();
     statistic.statisticRender = () => {
       filmsArraySelector.innerHTML = ``;
@@ -97,13 +97,13 @@ const commonRender = () => {
 
     filter.onFilter = (evt) => {
       const filterName = evt.target.textContent.replace(/\d+/g, ``).trim();
-      const filteredF = filteredFilms(arrFillms, filterName);
+      const filteredF = filteredFilms(arrFilms, filterName);
       filmsArraySelector.innerHTML = ``;
       renderFilms(filmsArraySelector, filteredF, true);
     };
   });
 
-  renderFilms(filmsArraySelector, arrFillms, false);
+  renderFilms(filmsArraySelector, arrFilms, true);
   renderFilms(filmRatedSelector, arrFilmsRated, false);
   renderFilms(filmCommentedSelector, arrFilmsCommented, false);
 };
