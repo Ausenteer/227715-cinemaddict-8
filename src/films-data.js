@@ -123,7 +123,7 @@ const COMMENTS = [
 
 const getRandomReleaseDate = () => moment(Math.floor(Math.random() * new Date().getTime())).format(`DD MMMM YYYY`);
 
-export const getRandomFilm = () => ({
+export const getRandomFilm = (id) => ({
   title: getRandomElementInArray(TITLES),
   poster: `../images/posters/${getRandomElementInArray(POSTERS)}.jpg`,
   rating: getRandomRating(),
@@ -138,6 +138,16 @@ export const getRandomFilm = () => ({
   writers: getRandomElememtsInArray(WRITERS, WRITERS.length).join(`, `),
   countries: getRandomElementInArray(COUNTRIES),
   comments: [getRandomElementInArray(COMMENTS)],
+  isWatched: Math.random() >= 0.5,
+  isInWatchlist: Math.random() >= 0.5,
+  isFavorite: Math.random() >= 0.5,
+  id
 });
 
-export const getArrayFilms = (count) => [...Array(count).keys()].map(getRandomFilm);
+export const getArrayFilms = (count) => {
+  let arr = [];
+  for (let i = 0; i < count; ++i) {
+    arr.push(getRandomFilm(i));
+  }
+  return arr;
+};

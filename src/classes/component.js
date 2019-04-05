@@ -7,7 +7,7 @@ export class Component {
     }
 
     this._data = data;
-    this._isControl = isControl;
+    this.isControl = isControl;
     this._element = null;
   }
 
