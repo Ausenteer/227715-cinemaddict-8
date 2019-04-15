@@ -56,7 +56,7 @@ export default class Popup extends Component {
   _onFormSubmit() {
     const formData = new FormData(this._element.querySelector(`.film-details__inner`));
     const data = this._updateDataForm(formData);
-    const comments = this._data.comments.slice();
+    const comments = this._data.userComments.slice();
 
     comments.push({
       author: `Elena Ilina`,
@@ -110,7 +110,7 @@ export default class Popup extends Component {
     }
 
     if (data.comments) {
-      this._data.comments = data.comments;
+      this._data.userComments = data.comments;
     }
   }
   _updateRatingScoreOnPopup() {
