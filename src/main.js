@@ -10,7 +10,6 @@ import API from './classes/api';
 let filmCountInitialFrom = 0;
 let filmCountInitialTo = 5;
 let filmsView;
-const FILM_COUNT_RATED_COMMENTED = 2;
 
 // селекторы
 const mainNavigationSelector = document.querySelector(`.main-navigation`);
@@ -92,7 +91,6 @@ const commonRender = () => {
     const statistic = new Statistic(dataFilm.data);
     statistic._bind();
     statistic.statisticRender = () => {
-      console.log(dataFilm.data);
       filmsArraySelector.innerHTML = ``;
       statistic.render(filmsArraySelector);
       statistic.calcStatistic();
@@ -100,14 +98,6 @@ const commonRender = () => {
   };
 
   const renderFilms = (selector, arr, isControl) => {
-    // const statistic = new Statistic(arr);
-    // statistic._bind();
-    // statistic.statisticRender = () => {
-    //   filmsArraySelector.innerHTML = ``;
-    //   statistic.render(filmsArraySelector);
-    //   statistic.calcStatistic();
-    // };
-
     arr.forEach((el) => {
       const film = new Film(el, isControl);
       const popup = new Popup(el);
