@@ -17,6 +17,7 @@ export default class Film extends Component {
     this._onPopup = null;
     this._onAddToWatchList = null;
     this._onMarkAsWatched = null;
+    this._onAddToFavorite = null;
 
   }
   get template() {
@@ -35,6 +36,10 @@ export default class Film extends Component {
     this._onMarkAsWatched = fn;
   }
 
+  set onAddToFavorite(fn) {
+    this._onAddToFavorite = fn;
+  }
+
   _onClick() {
     return typeof this._onPopup === `function` && this._onPopup();
   }
@@ -50,6 +55,7 @@ export default class Film extends Component {
   }
   _onAddToFavoriteClick(event) {
     event.preventDefault();
+    return typeof this._onAddToFavorite === `function` && this._onAddToFavorite(this._data);
   }
 
   _bind() {
@@ -72,8 +78,8 @@ export default class Film extends Component {
       this._data.rating = data.rating;
     }
 
-    if (data.comments) {
-      this._data.comments = data.comments;
+    if (data.userComments) {
+      this._data.userComments = data.userComments;
     }
   }
 }

@@ -30,6 +30,15 @@ const EMOJI = [
   }
 ];
 
+const getEmoji = (name) => {
+  switch (name) {
+    case `sleeping`: return `😴`;
+    case `neutral-face`: return `😐`;
+    case `grinning`: return `😀`;
+    default: return `😀`;
+  }
+};
+
 const makeEmoji = () => (
   `<div class="film-details__emoji-list">
     ${EMOJI.map((emoji) => (
@@ -40,9 +49,9 @@ const makeEmoji = () => (
 );
 
 const makeComments = (data) => (
-  data.comments.map((comment) => (
+  data.userComments.map((comment) => (
     `<li class="film-details__comment">
-      <span class="film-details__comment-emoji">${comment.emoji}</span>
+      <span class="film-details__comment-emoji">${getEmoji(comment.emotion)}</span>
       <div>
         <p class="film-details__comment-text">${comment.comment}</p>
         <p class="film-details__comment-info">
@@ -80,8 +89,8 @@ export const makeScore = (film) => {
 
 const makeGenre = (film) => {
   const block = [...(film.genre)].map((genre) => (
-    `<span class="film-details__genre">${genre}</span>`
-  )).join(``).split(` `);
+    `<span class="film-details__genre">${genre}, </span>`
+  )).join(``);
 
   return (
     `<tr class="film-details__row">
@@ -94,19 +103,19 @@ const makeGenre = (film) => {
 const makeDuration = (film) => (
   `<tr class="film-details__row">
     <td class="film-details__term">Runtime</td>
-    <td class="film-details__cell">${film.duration}</td>
+    <td class="film-details__cell">${film.duration} m</td>
   </tr>`
 );
 
 export const makeCommentsBlock = (film) => (
   `<section class="film-details__comments-wrap">
-      <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${film.comments.length}</span></h3>
+      <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${film.userComments.length}</span></h3>
       ${makeComments(film)}
       <div class="film-details__new-comment">
         <div>
           <label for="add-emoji" class="film-details__add-emoji-label">😐</label>
           <input type="checkbox" class="film-details__add-emoji visually-hidden" id="add-emoji">
-            ${makeEmoji()}
+         ${makeEmoji()}
         </div>
         <label class="film-details__comment-label">
           <textarea class="film-details__comment-input" placeholder="← Select reaction, add comment here" name="comment"></textarea>
@@ -136,7 +145,7 @@ export const makePopup = (data) => (`<section class="film-details">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
               <h3 class="film-details__title">${data.title}</h3>
-              <p class="film-details__title-original">Original: ${data.title}</p>
+              <p class="film-details__title-original">Original: ${data.alternativeTitle}</p>
             </div>
             ${makeRating(data)}
           </div>
@@ -155,12 +164,12 @@ export const makePopup = (data) => (`<section class="film-details">
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${data.year} (${data.countries})</td>
+              <td class="film-details__cell">${data.year} (${data.country})</td>
             </tr>
             ${makeDuration(data)}
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">${data.countries}</td>
+              <td class="film-details__cell">${data.country}</td>
             </tr>
             ${makeGenre(data)}
           </table>
