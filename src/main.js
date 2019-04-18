@@ -1,5 +1,5 @@
 import {getArrayFilters} from './filters-data';
-import dataFilm from './films-data';
+import FilmStorage from './films-data';
 
 import Film from './classes/film';
 import Popup from './classes/popup';
@@ -10,6 +10,7 @@ import API from './classes/api';
 let filmCountInitialFrom = 0;
 let filmCountInitialTo = 5;
 let filmsView;
+let dataFilm = new FilmStorage();
 
 // селекторы
 const mainNavigationSelector = document.querySelector(`.main-navigation`);

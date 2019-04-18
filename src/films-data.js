@@ -152,7 +152,7 @@
 //   return arr;
 // };
 
-class FilmStorage {
+export default class FilmStorage {
   constructor() {
     this._storage = null;
   }
@@ -164,4 +164,4 @@ class FilmStorage {
     this._storage = data;
   }
 }
-export default new FilmStorage();
+// export default new FilmStorage();
